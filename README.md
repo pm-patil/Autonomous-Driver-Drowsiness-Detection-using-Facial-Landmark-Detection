@@ -2,7 +2,7 @@
 This Repo contains Python3 Application using dlib - Facial landmark detection model for Driver drowsiness detection through various constraints and face landmarking 
 
 
-## Linux/Windows USAGE : 
+## Linux/Windows USAGE (For Collaborators !) : 
 #### 1) Clone Repo to Local Computer (Download Repo). (first time only)
 ```
 git clone https://github.com/pm-patil/Drowsy-Driver   
