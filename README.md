@@ -3,7 +3,7 @@ This Repo contains Python3 Application using dlib - Facial landmark detection mo
 
 
 ## Linux USAGE : 
-#### 1) Clone Repo to Local Compter (Download Repo). (first time only)
+#### 1) Clone Repo to Local Computer (Download Repo). (first time only)
 ```
 git clone https://github.com/pm-patil/Drowsy-Driver   
 ```
@@ -23,14 +23,19 @@ git pull --rebase origin master
 
 ```
 cd Drowsy-Driver
-
 git add .
 git commit -m "Add any message here"
 ```
+
 ```
 git fetch origin master:tmp
 git rebase tmp
 git push origin HEAD:master
+```
+
+   provide your username and password
+
+```
 git branch -D tmp
 ```
 #### 4) Delete
