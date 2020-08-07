@@ -6,4 +6,4 @@ This Repo contains Python3 Application using dlib - Facial landmark detection mo
   <img src="https://contributors-img.web.app/image?repo=pm-patil/Autonomous-Driver-Drowsiness-Detection-using-Facial-Landmark-Detection" />
 </a>
 
-Made with [contributors-img](https://contributors-img.web.app).
+
