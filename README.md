@@ -13,7 +13,7 @@ cd Drowsy-Driver
 git pull --rebase origin master
 ```
 #### 3) Add files/Folders to Repo (Important !)
-    ##### A)
+   ##### A)
 
 ```
 cd Drowsy-Driver
@@ -23,7 +23,7 @@ git pull --rebase origin master
    
    Change/Update/Add/Delete files(folders) in this folder
 
-    ##### B)
+   ##### B)
 ```
 cd Drowsy-Driver
 git add .
@@ -47,4 +47,4 @@ error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
 
 ```
-    ##### Goto 3(B)
+   ##### Goto 3(B)
