@@ -22,6 +22,8 @@ git pull --rebase origin master
    Change/Update/Add/Delete files(folders) in this folder
 
 ```
+cd Drowsy-Driver
+
 git add .
 git commit -m "Add any message here"
 ```
@@ -31,3 +33,4 @@ git rebase tmp
 git push origin HEAD:master
 git branch -D tmp
 ```
+#### 4) Delete
