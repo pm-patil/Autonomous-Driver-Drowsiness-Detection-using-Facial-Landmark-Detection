@@ -10,12 +10,12 @@ git clone https://github.com/pm-patil/Drowsy-Driver
 #### 2) Download latest version of Repo on Local Computer. 
 ```
 cd Drowsy-Driver
-git pull
+git pull --rebase origin master
 ```
 #### 3) Add files/Folders to Repo (Important !)
 ```
 cd Drowsy-Driver
-git pull
+git pull --rebase origin master
 ```
    Open folder 'Drowsy-Driver'
    
