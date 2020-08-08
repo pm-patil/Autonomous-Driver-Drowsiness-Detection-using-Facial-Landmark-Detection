@@ -45,6 +45,5 @@ git branch -D tmp
 ```
 error: cannot pull with rebase: You have unstaged changes.
 error: please commit or stash them.
-
 ```
-   ##### Goto 3(B)
+##### Goto 3(B)
