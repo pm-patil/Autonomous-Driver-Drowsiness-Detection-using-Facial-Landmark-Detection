@@ -62,10 +62,10 @@ while True:                                                                  # l
 		if cnt==200:
 			
 			eye_t1=eye_t/cnt
-			print(eye_t1,ear,cnt)
+			#print(eye_t1,ear,cnt)
 			eye_t1=eye_t1-0.05
-			print(eye_t1,ear,cnt)
-			print(oneNose1)
+			#print(eye_t1,ear,cnt)
+			#print(oneNose1)
 		leftEyeHull = cv2.convexHull(leftEye)                        # create convex shape by joining points in leftEye array
 		rightEyeHull = cv2.convexHull(rightEye)                      #
 		noseHull = cv2.convexHull(oneNose)#                          #
