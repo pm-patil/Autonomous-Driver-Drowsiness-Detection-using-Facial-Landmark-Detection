@@ -11,7 +11,7 @@ import mouth # module2  - mouth.py
 frame_check = 20	   # counter for 20 consecutive frames        (constant)  (customizable)
 thresh = 0.26   # Eye     # Eye spect ratio                          (threshold) (customizable)             
 thresh2 = 0.55  # Mouth   # Verticle/horizontal ratio for open mouth (threshold) (customizable)
-
+eye_t=0
 
 	
 detect = dlib.get_frontal_face_detector() # initialize 
@@ -28,47 +28,67 @@ cap=cv2.VideoCapture(0) # starts camera /video feed
 
 flag=0                                                                       # flag for eye   (number of frames for which eyes are closed/drowsy )
 flag2=0                                                                      # flag for mouth (number of frames for which mouth is open )
-
+eye_t=0
+eye_t1=0
+cnt=0
 while True:                                                                  # loop until 'q' is pressed to exit loop
 	ret, frame=cap.read()                                                # opencv  - true if farme is present
 	frame = imutils.resize(frame, width=450)                             # resize feed to small window 
 	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)                       # frame is converted to greyscale  
 	subjects = detect(gray, 0)                                           #opencv2 detect face from frame(greyscale)
 	
+		
 	for subject in subjects:
 		shape = predict(gray, subject)                               # predict points -  68 points
 		shape = face_utils.shape_to_np(shape)                        # converting to NumPy Array
-		
+		cnt=cnt+1
 		leftEye = shape[lStart:lEnd]                                 # 2D array - first point - lstart with x,y 
 		rightEye = shape[rStart:rEnd]                                #
 		leftEyeb = shape[leStart:leEnd]                              #
 		rightEyeb = shape[riStart:riEnd]                             # CREATE  7  2D-Arrays (realtime - per frame) 
 		jaws = shape[jStart:jEnd]#                                   #
 		oneNose = shape[nStart:nEnd]#                                #
+		#                                 #
+		oneNose1 = oneNose[0:4]
+		noseHulli = oneNose[3:nEnd]
 		oneMouth = shape[mStart:mEnd]                                # 2D array - first point - mstart with x,y
+		oneMouthi = oneMouth[12:mEnd]
 		
 		leftEAR = eye.eye_aspect_ratio(leftEye)                      # EAR for lefteye (vertical /horizontal) from eye package
 		rightEAR = eye.eye_aspect_ratio(rightEye)                    # EAR for righteye (vertical /horizontal) 
 		ear = (leftEAR + rightEAR) / 2.0                             # average for accuracy
 		yawnRatio = mouth.yawning(oneMouth)                          # ratio of mouth (vertical /horizontal)  from mouth package
-		
+		eye_t=eye_t+ear
+		if cnt==200:
+			
+			eye_t1=eye_t/cnt
+			print(eye_t1,ear,cnt)
+			eye_t1=eye_t1-0.05
+			print(eye_t1,ear,cnt)
+			print(oneNose1)
 		leftEyeHull = cv2.convexHull(leftEye)                        # create convex shape by joining points in leftEye array
 		rightEyeHull = cv2.convexHull(rightEye)                      #
 		noseHull = cv2.convexHull(oneNose)#                          #
+		noseHull1 = cv2.convexHull(noseHulli)#			       #
+		
 		mouthHull = cv2.convexHull(oneMouth)#                        # create convex shape by joining points in oneMouth array
+		mouthHulli = cv2.convexHull(oneMouthi) 
 		 
 		cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)                   # DRAW shape on live feed(frame) - polygon
 		cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)                  #
 		#cv2.drawContours(frame, [noseHull], -1, (0, 255, 0), 1)#                    #
 		cv2.drawContours(frame, [mouthHull], -1, (0, 255, 0), 1)                     # DRAW shape on live feed(frame) - polygon
 		#jawsHull = cv2.polylines(frame,[jaws],False,(0, 255, 0), 1 )#               # CREATE and DRAW shape - line
-		#leftEyebHull = cv2.polylines(frame,[leftEyeb],False,(0, 255, 0), 1 )#       # CREATE and DRAW shape - line
-		#rightEyebHull = cv2.polylines(frame,[rightEyeb],False,(0, 255, 0), 1 )#     # CREATE and DRAW shape - line 
+		leftEyebHull = cv2.polylines(frame,[leftEyeb],False,(0, 255, 0), 1 )#       # CREATE and DRAW shape - line
+		noselines= cv2.polylines(frame,[oneNose1],False,(0, 255, 0), 1 )
+		rightEyebHull = cv2.polylines(frame,[rightEyeb],False,(0, 255, 0), 1 )#     # CREATE and DRAW shape - line 
+		cv2.drawContours(frame, [mouthHulli], -1, (0, 255, 0), 1) 
+		cv2.drawContours(frame, [noseHull1], -1, (0, 255, 0), 1) 
 		
 		
 		######################################       LOGIC      ##########################
 		
-		if ear < thresh:                                                                             # if eye ratio below threshold i.e drowsy
+		if ear < eye_t1:                                                                             # if eye ratio below threshold i.e drowsy
 			
 			flag += 1                                                                            # increase flag (per frame)  
 			#print (flag)                                                                        # for debug
@@ -101,7 +121,7 @@ while True:                                                                  # l
 		#######################################      LOGIC END      ############################	
 			
 	        
-	cv2.imshow("Frame", frame)            # show LIVE FEED WINDOW 
+	cv2.imshow("Drowsy Driver", frame)            # show LIVE FEED WINDOW 
 	key = cv2.waitKey(1) & 0xFF           # check for keypress
 	if key == ord("q"):                   # if key ==q
 		break                         #  break
